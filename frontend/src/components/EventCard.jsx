@@ -1,5 +1,9 @@
 import StatusBadge from "./StatusBadge";
 
+function formatTime(value) {
+  return value ? value.slice(0, 5) : "-";
+}
+
 export default function EventCard({ event, registrationCount, onRegister, onViewSummary, registering }) {
   return (
     <div className="card event-card">
@@ -10,6 +14,10 @@ export default function EventCard({ event, registrationCount, onRegister, onView
       <dl className="event-details">
         <dt>Date</dt>
         <dd>{event.eventDate}</dd>
+        <dt>Time</dt>
+        <dd>
+          {formatTime(event.startTime)} - {formatTime(event.endTime)}
+        </dd>
         <dt>Capacity</dt>
         <dd>{event.maximumCapacity}</dd>
         {registrationCount !== undefined && (

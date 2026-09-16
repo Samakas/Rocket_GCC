@@ -4,7 +4,14 @@ import { useCurrentUser } from "../context/CurrentUserContext";
 import Message from "../components/Message";
 import RoleGuard from "../components/RoleGuard";
 
-const emptyForm = { eventName: "", eventDate: "", maximumCapacity: "", organizerId: "" };
+const emptyForm = {
+  eventName: "",
+  eventDate: "",
+  startTime: "",
+  endTime: "",
+  maximumCapacity: "",
+  organizerId: "",
+};
 
 function CreateEventForm() {
   const { organizers, currentUser } = useCurrentUser();
@@ -29,8 +36,20 @@ function CreateEventForm() {
     setError("");
     setSuccess("");
 
-    if (!form.eventName || !form.eventDate || !form.maximumCapacity || !form.organizerId) {
+    if (
+      !form.eventName ||
+      !form.eventDate ||
+      !form.startTime ||
+      !form.endTime ||
+      !form.maximumCapacity ||
+      !form.organizerId
+    ) {
       setError("Please fill in every field.");
+      return;
+    }
+
+    if (form.startTime >= form.endTime) {
+      setError("Start time must be before end time.");
       return;
     }
 
@@ -39,6 +58,8 @@ function CreateEventForm() {
       await EventAPI.create({
         eventName: form.eventName,
         eventDate: form.eventDate,
+        startTime: form.startTime,
+        endTime: form.endTime,
         maximumCapacity: Number(form.maximumCapacity),
         organizerId: Number(form.organizerId),
       });
@@ -71,6 +92,16 @@ function CreateEventForm() {
         <label>
           Event Date
           <input type="date" name="eventDate" value={form.eventDate} onChange={handleChange} />
+        </label>
+
+        <label>
+          Start Time
+          <input type="time" name="startTime" value={form.startTime} onChange={handleChange} />
+        </label>
+
+        <label>
+          End Time
+          <input type="time" name="endTime" value={form.endTime} onChange={handleChange} />
         </label>
 
         <label>

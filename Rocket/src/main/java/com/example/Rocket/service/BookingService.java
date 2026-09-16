@@ -40,6 +40,13 @@ public class BookingService {
         return user;
     }
 
+    private boolean timesOverlap(Event a, Event b) {
+        if (!a.getEventDate().isEqual(b.getEventDate())) {
+            return false;
+        }
+        return a.getStartTime().isBefore(b.getEndTime()) && b.getStartTime().isBefore(a.getEndTime());
+    }
+
     @Transactional
     public Booking register(Long eventId, Long studentId) {
         Event event = eventRepository.findById(eventId)
@@ -53,6 +60,15 @@ public class BookingService {
         Booking existing = bookingRepository.findByStudentAndEvent(student, event).orElse(null);
         if (existing != null && existing.getStatus() != BookingStatus.CANCELLED) {
             throw new ConflictException("Student has already registered for this event");
+        }
+
+        boolean hasConflict = bookingRepository.findByStudent(student).stream()
+                .filter(b -> b.getStatus() == BookingStatus.REGISTERED || b.getStatus() == BookingStatus.CHECKED_IN)
+                .filter(b -> !b.getEvent().getId().equals(event.getId()))
+                .anyMatch(b -> timesOverlap(b.getEvent(), event));
+        if (hasConflict) {
+            throw new ConflictException(
+                    "Student already has another event booked during this time slot");
         }
 
         long activeCount = bookingRepository.countByEventAndStatusIn(

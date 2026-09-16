@@ -37,7 +37,16 @@ public class EventService {
             throw new InvalidOperationException("Maximum capacity must be greater than 0");
         }
 
-        Event event = new Event(request.getEventName(), request.getEventDate(), request.getMaximumCapacity(), organizer);
+        if (request.getStartTime() == null || request.getEndTime() == null) {
+            throw new InvalidOperationException("Start time and end time are required");
+        }
+
+        if (!request.getStartTime().isBefore(request.getEndTime())) {
+            throw new InvalidOperationException("Start time must be before end time");
+        }
+
+        Event event = new Event(request.getEventName(), request.getEventDate(), request.getStartTime(),
+                request.getEndTime(), request.getMaximumCapacity(), organizer);
         return eventRepository.save(event);
     }
 

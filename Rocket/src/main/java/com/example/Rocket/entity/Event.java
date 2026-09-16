@@ -13,6 +13,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 
 @Entity
 @Getter
@@ -28,6 +29,10 @@ public class Event {
 
     private LocalDate eventDate;
 
+    private LocalTime startTime;
+
+    private LocalTime endTime;
+
     private Integer maximumCapacity;
 
     @Enumerated(EnumType.STRING)
@@ -37,9 +42,12 @@ public class Event {
     @JoinColumn(name = "organizer_id")
     private User organizer;
 
-    public Event(String eventName, LocalDate eventDate, Integer maximumCapacity, User organizer) {
+    public Event(String eventName, LocalDate eventDate, LocalTime startTime, LocalTime endTime,
+                 Integer maximumCapacity, User organizer) {
         this.eventName = eventName;
         this.eventDate = eventDate;
+        this.startTime = startTime;
+        this.endTime = endTime;
         this.maximumCapacity = maximumCapacity;
         this.organizer = organizer;
         this.status = EventStatus.OPEN;
