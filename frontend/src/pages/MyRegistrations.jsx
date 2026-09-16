@@ -10,6 +10,10 @@ function formatDateTime(value) {
   return new Date(value).toLocaleString();
 }
 
+function formatTime(value) {
+  return value ? value.slice(0, 5) : "-";
+}
+
 function MyRegistrationsContent() {
   const { currentUser } = useCurrentUser();
   const [bookings, setBookings] = useState([]);
@@ -76,6 +80,7 @@ function MyRegistrationsContent() {
             <tr>
               <th>Event Name</th>
               <th>Event Date</th>
+              <th>Time</th>
               <th>Status</th>
               <th>Registered At</th>
               <th>Checked In At</th>
@@ -85,7 +90,7 @@ function MyRegistrationsContent() {
           <tbody>
             {bookings.length === 0 && (
               <tr>
-                <td colSpan="6" className="empty-cell">
+                <td colSpan="7" className="empty-cell">
                   No bookings yet.
                 </td>
               </tr>
@@ -94,6 +99,9 @@ function MyRegistrationsContent() {
               <tr key={b.id}>
                 <td>{b.event.eventName}</td>
                 <td>{b.event.eventDate}</td>
+                <td>
+                  {formatTime(b.event.startTime)} - {formatTime(b.event.endTime)}
+                </td>
                 <td>
                   <StatusBadge status={b.status} />
                 </td>

@@ -73,7 +73,7 @@ function AttendanceContent() {
             <option value="">Select an event</option>
             {events.map((ev) => (
               <option key={ev.id} value={ev.id}>
-                {ev.eventName} ({ev.eventDate})
+                {ev.eventName} ({ev.eventDate}, {ev.startTime?.slice(0, 5)}-{ev.endTime?.slice(0, 5)})
               </option>
             ))}
           </select>
