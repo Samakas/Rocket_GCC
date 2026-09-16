@@ -62,7 +62,8 @@ src/
 ## ER Diagram
 
 This is the original hand-drawn design for the data model:
-<img width="960" height="1280" alt="image" src="https://github.com/user-attachments/assets/abc3bff4-2796-405f-9d58-3cdbd7eee594" />
+<img width="936" height="663" alt="ER-Diagram-Rocket" src="https://github.com/user-attachments/assets/3b251016-7ad1-419e-9672-ef63c4ff589f" />
+
 
 
 > **Note:** the current implementation matches `USER` / `EVENTS` / `BOOKINGS` from this
