@@ -59,6 +59,16 @@ src/
   `status` (`REGISTERED`/`CANCELLED`/`CHECKED_IN`/`ABSENT`), `registeredAt`,
   `checkedInAt`. This is the join entity representing a student's pass for an event.
 
+## ER Diagram
+
+This is the original hand-drawn design for the data model:
+![alt text](image.png)
+
+> **Note:** the current implementation matches `USER` / `EVENTS` / `BOOKINGS` from this
+> diagram (with `email` instead of `password`, and `EVENTS` split into `eventDate` +
+> `startTime` + `endTime`). The `FEEDBACK` entity is part of the original design but is
+> **not implemented yet** — there's no feedback/ratings API in the backend today.
+
 ## Business rules
 
 - **Create event** — only a user with role `ORGANIZER` can create an event. Requires a
