@@ -62,7 +62,8 @@ src/
 ## ER Diagram
 
 This is the original hand-drawn design for the data model:
-![alt text](image.png)
+<img width="960" height="1280" alt="image" src="https://github.com/user-attachments/assets/abc3bff4-2796-405f-9d58-3cdbd7eee594" />
+
 
 > **Note:** the current implementation matches `USER` / `EVENTS` / `BOOKINGS` from this
 > diagram (with `email` instead of `password`, and `EVENTS` split into `eventDate` +
